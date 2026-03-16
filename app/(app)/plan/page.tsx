@@ -50,7 +50,7 @@ export default function PlanPage() {
       .order('slot_order')
 
     const rawSlots = slotData || []
-    const creatorIds = [...new Set(rawSlots.map((s: {recipe?: {created_by?: string | null}}) => s.recipe?.created_by).filter(Boolean))] as string[]
+    const creatorIds = Array.from(new Set(rawSlots.map((s: {recipe?: {created_by?: string | null}}) => s.recipe?.created_by).filter(Boolean))) as string[]
     let profileMap: Record<string, string> = {}
     if (creatorIds.length > 0) {
       const { data: profiles } = await supabase.from('profiles').select('id, display_name').in('id', creatorIds)
