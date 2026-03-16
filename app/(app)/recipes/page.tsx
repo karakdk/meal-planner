@@ -48,7 +48,7 @@ export default function RecipesPage() {
   }, [supabase, tab])
 
   async function enrichWithCreators(data: Recipe[]) {
-    const creatorIds = [...new Set(data.map(r => r.created_by).filter(Boolean))] as string[]
+    const creatorIds = Array.from(new Set(data.map(r => r.created_by).filter(Boolean))) as string[]
     let profileMap: Record<string, string> = {}
     if (creatorIds.length > 0) {
       const { data: profiles } = await supabase.from('profiles').select('id, display_name').in('id', creatorIds)
@@ -81,7 +81,7 @@ export default function RecipesPage() {
   }
 
   // Get all tags used across loaded recipes
-  const allTags = [...new Set(recipes.flatMap(r => r.tags || []))].sort()
+  const allTags = Array.from(new Set(recipes.flatMap(r => r.tags || []))).sort()
   const tagsToShow = allTags.length > 0 ? allTags : PRESET_TAGS.slice(0, 8)
 
   const filtered = recipes.filter(r => {
