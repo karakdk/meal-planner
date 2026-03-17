@@ -193,7 +193,7 @@ export default function RecipesPage() {
                   )}
                   {(recipe.tags || []).length > 0 && (
                     <div className="flex gap-1 mb-2 flex-wrap">
-                      {(recipe.tags || []).slice(0,2).map(tag => (
+                      {(recipe.tags || []).map(tag => (
                         <span key={tag} className="text-[9px] bg-sage-50 text-sage-700 px-1.5 py-0.5 rounded-md border border-sage-100">{tag}</span>
                       ))}
                     </div>

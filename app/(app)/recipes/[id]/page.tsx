@@ -160,6 +160,13 @@ export default function RecipeDetailPage() {
           )}
         </div>
         {creator && <p className="text-xs text-stone-400 mb-3">Added by {creator.display_name}</p>}
+        {(recipe.tags || []).length > 0 && (
+          <div className="flex gap-1 flex-wrap mb-3">
+            {(recipe.tags || []).map(tag => (
+              <span key={tag} className="text-[10px] bg-sage-50 text-sage-700 px-2 py-0.5 rounded-md border border-sage-100">{tag}</span>
+            ))}
+          </div>
+        )}
         <div className="flex flex-wrap gap-2">
           {calPerServ > 0 && <span className="text-xs bg-white text-sage-800 border border-sage-200 px-2.5 py-1 rounded-full font-medium">{calPerServ.toLocaleString()} cal / serving</span>}
           {protPerServ > 0 && <span className="text-xs bg-white text-sage-800 border border-sage-200 px-2.5 py-1 rounded-full font-medium">{protPerServ}g protein</span>}
