@@ -72,7 +72,7 @@ export default function ShoppingPage() {
       const next = new Set(prev)
       if (next.has(key)) next.delete(key)
       else next.add(key)
-      if (planId) localStorage.setItem(`shopping-checked-${planId}`, JSON.stringify([...next]))
+      if (planId) localStorage.setItem(`shopping-checked-${planId}`, JSON.stringify(Array.from(next)))
       return next
     })
   }
