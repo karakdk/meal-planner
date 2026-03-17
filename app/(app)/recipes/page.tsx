@@ -68,7 +68,7 @@ export default function RecipesPage() {
       setSavedIds(prev => { const n = new Set(prev); n.delete(recipeId); return n })
     } else {
       await supabase.from('saved_recipes').insert({ household_id: householdId, recipe_id: recipeId, saved_by: user?.id })
-      setSavedIds(prev => new Set([...prev, recipeId]))
+      setSavedIds(prev => { const n = new Set(prev); n.add(recipeId); return n })
     }
     setSavingId(null)
   }
