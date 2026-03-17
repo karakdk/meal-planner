@@ -54,7 +54,7 @@ export default function RecipesPage() {
       const { data: profiles } = await supabase.from('profiles').select('id, display_name').in('id', creatorIds)
       profileMap = Object.fromEntries((profiles || []).map((p: {id: string; display_name: string}) => [p.id, p.display_name]))
     }
-    setRecipes(data.map(r => ({ ...r, creator: r.created_by ? { display_name: profileMap[r.created_by] || 'Unknown', id: r.created_by, created_at: '' } : null })))
+    setRecipes(data.map(r => ({ ...r, creator: r.created_by ? { display_name: profileMap[r.created_by] || 'Unknown', id: r.created_by, created_at: '', household_id: null } : null })))
   }
 
   useEffect(() => { load() }, [load])
