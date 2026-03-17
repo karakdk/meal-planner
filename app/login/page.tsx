@@ -12,8 +12,6 @@ export default function LoginPage() {
   const [name, setName] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [sent, setSent] = useState(false)
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
@@ -25,12 +23,14 @@ export default function LoginPage() {
           options: { data: { display_name: name } }
         })
         if (signUpError) throw signUpError
-        // Update display name in profiles
+        const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
+        if (signInError) throw signInError
         const { data: { user } } = await supabase.auth.getUser()
         if (user) {
           await supabase.from('profiles').upsert({ id: user.id, display_name: name })
         }
-        setSent(true)
+        router.push('/plan')
+        router.refresh()
       } else {
         const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
         if (signInError) throw signInError
@@ -42,23 +42,6 @@ export default function LoginPage() {
     } finally {
       setLoading(false)
     }
-  }
-
-  if (sent) {
-    return (
-      <div className="min-h-screen flex items-center justify-center p-6">
-        <div className="w-full max-w-sm text-center animate-fade-up">
-          <div className="w-12 h-12 rounded-full bg-sage-50 flex items-center justify-center mx-auto mb-4">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M3 10l5 5L17 6" stroke="#3B6D11" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-          <h2 className="text-xl font-medium text-stone-900 mb-2">Check your email</h2>
-          <p className="text-stone-500 text-sm">We sent a confirmation link to <strong className="text-stone-800">{email}</strong>. Click it to activate your account, then come back and log in.</p>
-          <button onClick={() => { setSent(false); setMode('login') }} className="mt-6 text-sage-600 text-sm underline underline-offset-2">Back to login</button>
-        </div>
-      </div>
-    )
   }
 
   return (
