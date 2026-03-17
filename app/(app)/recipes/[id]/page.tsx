@@ -103,8 +103,8 @@ export default function RecipeDetailPage() {
   const sortedIngs = [...(recipe.ingredients || [])].sort((a, b) => a.sort_order - b.sort_order)
   const nonPantry = sortedIngs.filter(i => !i.is_pantry_staple)
   const pantry = sortedIngs.filter(i => i.is_pantry_staple)
-  const cal = sortedIngs.reduce((s, i) => s + (i.calories || 0) * i.qty, 0)
-  const prot = sortedIngs.reduce((s, i) => s + (i.protein || 0) * i.qty, 0)
+  const cal = sortedIngs.reduce((s, i) => s + (i.calories || 0), 0)
+  const prot = sortedIngs.reduce((s, i) => s + (i.protein || 0), 0)
   const calPerServ = Math.round(cal / recipe.servings)
   const protPerServ = Math.round(prot / recipe.servings)
   const isOwner = currentUserId && recipe.created_by === currentUserId

@@ -75,8 +75,8 @@ export default function RecipesPage() {
 
   function getMacros(recipe: Recipe) {
     if (!recipe.ingredients?.length) return null
-    const cal = recipe.ingredients.reduce((s, i) => s + (i.calories||0)*i.qty, 0)
-    const prot = recipe.ingredients.reduce((s, i) => s + (i.protein||0)*i.qty, 0)
+    const cal = recipe.ingredients.reduce((s, i) => s + (i.calories||0), 0)
+    const prot = recipe.ingredients.reduce((s, i) => s + (i.protein||0), 0)
     return { calPerServ: Math.round(cal/recipe.servings), protPerServ: Math.round(prot/recipe.servings) }
   }
 
