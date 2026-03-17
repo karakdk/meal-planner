@@ -41,7 +41,7 @@ export default function ShoppingPage() {
     // Aggregate using canonical_name for deduplication
     const agg: Record<string, ShopItem> = {}
     for (const slot of slots) {
-      const rec = slot.recipe as { servings: number; ingredients: Ingredient[] } | null
+      const rec = slot.recipe as unknown as { servings: number; ingredients: Ingredient[] } | null
       if (!rec?.ingredients) continue
       const scale = slot.servings / (rec.servings || 4)
       for (const ing of rec.ingredients) {
